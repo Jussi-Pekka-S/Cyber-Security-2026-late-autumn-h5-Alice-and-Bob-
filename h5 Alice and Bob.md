@@ -4,6 +4,7 @@ Can you guess what's my favourite book on crypto basics?
 
 x) Read and summarize (with some bullet points; check tips for free access)
 
+Source:
 € Schneier 2015: Applied Cryptography:
 Chapter 1 - Foundations
 1.1 Terminology
@@ -46,6 +47,7 @@ Chapter 2 - Protocol Building Blocks, sections
 - Basically: Person A makes their public key available and person B obtains it. Person B uses the public key to encrypt their message and sends the results in ciphertext to person A. Person A decrypts it with their private key.
 - And thus private keys should remain secret and public keys can be distributed.
 
+Source:
 Karvinen 2023: PGP - Send Encrypted and Signed Message - gpg
 
 - PGP provides at least these three security goals that are closely related:
@@ -56,7 +58,8 @@ Karvinen 2023: PGP - Send Encrypted and Signed Message - gpg
 - Combining both the signing and encryption, this provides evidence of authenticity/integrity and confidentiality.
 
 a) Pubkey today. Explain how you have used public key cryptography today or yesterday, outside of this homework. In addition to naming the system, identify how different parties use keys in different steps of the system. 
-(Answering this question likely requeries finding sources on your own. This subtask does not require tests with a computer.) Used Source: (Microsoft 2026)
+(Answering this question likely requeries finding sources on your own. This subtask does not require tests with a computer.) 
+Used Source: (Microsoft 2026)
 
 - Today I have used public-key cryptography with Microsoft Edge as the system, as I have browsed HTTPS -websites while working to look for information.
 - While I have accessed an HTTPS website, the cryptography has helped to establish the fact, that I am communicating with the genuine server to help in the setting up of a secure connection:
@@ -70,11 +73,40 @@ a) Pubkey today. Explain how you have used public key cryptography today or yest
 
 b) Encrypt and decrypt a message. Explain how different parties use different keys at different stages of operation. Evaluate the security of the tool you've chosen.
 
--
--
--
--
--
+Used Sources: (Both links of GnuPG 2026 & OpenPGP)
+
+For this part, I have used OpenPGP, where i chose the GnuPG(gpg). I think this in a way demonstrates/uses the same public-key concepts from the exercise that Karvinen had in the article. 
+I will call myself person A(decryptor) , and the other end person B(encryptor).
+
+- I want to sent an message to the person B, where I say "tomorrow's meeting starts at 13:00." 
+- Person B will create a key pair, and after that sent person A the public key, while keeping private key a secret.
+- Person A will import the key, and encrypt the file using this command:
+
+gpg --encrypt --armor --recipient B@example.com message.txt
+
+- This results in the encrypted file message.txt.asc, that can be sent to person B.
+- This will hide the original message from an possible eavesdropper, if they obtain the file.
+
+- Person B can decrypt it with the following command:
+
+gpg --decrypt message.txt.asc
+
+- This will result in the GnuPG using the corresponding private/secret key that recovers: "tomorrow's meeting starts at 13:00."
+
+- B's public key is used when encrypting for B
+- B's private key is used, when he decrypts.
+- With the symmetric session key, encryption/decryption of the actual message happens.
+
+- The strengths of using GnuPG are the following:
+1. Hybrid encryption that uses the combination of symmetric encryption with public-key cryptography. 
+2. Combinations of encryption and signatures can be used for messages simultaneously.
+3. The private keys do not have to be transmitted at all. Private key is under the control of person B, that leads to avoiding the exchange of a shared secret key with the person A.
+
+- The weaknesses of using GnuPG are the following:
+1. The private key has the possibility of being stolen by an attacker, leading to wrong usage. This is covered in the GNU Privacy Handbook, where are the instructions on how to protect the private keys and so on.
+2. Key verification has a "possibility" of wrong verification, as the cryptography does not mention who the key belongs to. This leads to possibilities of fake public keys being used.
+
+I hope this text opens up the usage of OpenPGP & GnuPG. As I forgot to take the pictures. Look at the original sources to find more information! 
 
 c) Password management. Demonstrate use of a password manager. What kind of attacks take advantage of people not using password managers? (You can use any password manager, some examples include pass and KeePassXC.)
 
@@ -89,12 +121,16 @@ c) Password management. Demonstrate use of a password manager. What kind of atta
 - The KeePass usually generates an password that is very safe, you can also adjust the options. 
 - You can write the title for an example "IT Specialist" and then the user name used for the system and the password. After hitting safe, the credentials are stored in the file for usage.
 - To me this has been very practical, as there are tons of different applications, sites and servers that require their own credentials. Remembering these from the top-of-your head is really hard.
+- I think the attacks that take advantage of people not using password managers depends on the case. It could be related to phishing, weak-passwords, password re-usage, different pop-ups just to name a few.
+- I have never had a problem with attacks, while using KeePass. 
 
-
-References:
+References/Sources:
 All accessed on 20.11.2026.
 
+- GnuPG 2026: https://www.gnupg.org/documentation//manuals/gnupg/Operational-GPG-Commands.html
+- GnuPG 2026: https://www.gnupg.org/gph/en/manual.pdf
 - Karvinen 2023: https://terokarvinen.com/2023/pgp-encrypt-sign-verify/
 - Karvinen 2026: https://terokarvinen.com/cyber-security/#agenda
 - Microsoft 2026: https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-cert-verification
+- OpenPGP 2026: https://www.openpgp.org/
 - Schneier 2015: https://www.oreilly.com/library/view/applied-cryptography-protocols/9781119096726/08_chap01.html
