@@ -48,11 +48,13 @@ Chapter 2 - Protocol Building Blocks, sections
 
 Karvinen 2023: PGP - Send Encrypted and Signed Message - gpg
 
--
--
--
--
--
+- PGP provides three security goals that are closely related:
+- Digital signatures that verify the person that signed the message and help with modification detection.
+- Public-key cryptography that establishes secure communication for the parties without exchanging a shared secret over a secure channel.
+- Encryption that protects the message from the outsiders, while protecting the confidentiality.
+
+- The same aspect that was mentioned before, where both parties exchange public keys.
+- Combining both the signing and encryption, this provides evidence of authenticity/integrity and confidentiality.
 
 a) Pubkey today. Explain how you have used public key cryptography today or yesterday, outside of this homework. In addition to naming the system, identify how different parties use keys in different steps of the system. 
 (Answering this question likely requries finding sources on your own. This subtask does not require tests with a computer.)
