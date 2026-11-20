@@ -41,29 +41,32 @@ Public-Key Algorithms:
 Chapter 2 - Protocol Building Blocks, sections
 2.5 Communications Using Public-Key Cryptography (From the start of "Communications using Public Key" until the start of "Digital signatures with encryption")
 
-- Public-key cryptography uses two different, but mathematically related keys. These are the previously mentioned public and private key.
+- Public key cryptography uses two different, but mathematically related keys. These are the previously mentioned public and private key.
 - It should not be possible or practical to determine the private key, while knowing the public key.
 - Basically: Person A makes their public key available and person B obtains it. Person B uses the public key to encrypt their message and sends the results in ciphertext to person A. Person A decrypts it with their private key.
 - And thus private keys should remain secret and public keys can be distributed.
 
 Karvinen 2023: PGP - Send Encrypted and Signed Message - gpg
 
-- PGP provides three security goals that are closely related:
-- Digital signatures that verify the person that signed the message and help with modification detection.
-- Public-key cryptography that establishes secure communication for the parties without exchanging a shared secret over a secure channel.
-- Encryption that protects the message from the outsiders, while protecting the confidentiality.
-
+- PGP provides at least these three security goals that are closely related:
+1. Digital signatures that verify the person that signed the message and help with modification detection.
+2. Public key cryptography that establishes secure communication for the parties without exchanging a shared secret over a secure channel.
+3. Encryption that protects the message from the outsiders, while protecting the confidentiality.
 - The same aspect that was mentioned before, where both parties exchange public keys.
 - Combining both the signing and encryption, this provides evidence of authenticity/integrity and confidentiality.
 
 a) Pubkey today. Explain how you have used public key cryptography today or yesterday, outside of this homework. In addition to naming the system, identify how different parties use keys in different steps of the system. 
-(Answering this question likely requries finding sources on your own. This subtask does not require tests with a computer.)
+(Answering this question likely requeries finding sources on your own. This subtask does not require tests with a computer.) Used Source: (Microsoft 2026)
 
--
--
--
--
--
+- Today I have used public-key cryptography with Microsoft Edge as the system, as I have browsed HTTPS -websites while working to look for information.
+- While I have accessed an HTTPS website, the cryptography has helped to establish the fact, that I am communicating with the genuine server to help in the setting up of a secure connection:
+ 
+1. Actual data transfer that happens after the handshake. Using session keys derived during the handshake, connection switches to fast symmetric encryption.
+2. Certificate Authority (CA), A trusted CA signs digitally the server's certificate using the CA's private key.
+3. Key establishment, in the modern TLS most commonly public-key mechanisms is ephemeral ECDHE. This is used between server and browser to establish shared secret material.
+4. Server authentication, where during the TLS handshake it demonstrates possession of the private key. Resulting in the helping of the browser in the verification of the communication with the server that is associated with the certificate.
+5. The browser I am using, in this case Microsoft Edge uses appropriate CA public key in the verification of the server certificate.
+6. Website has the private key that it keeps a secret. While presenting a certificate with the corresponding public key.
 
 b) Encrypt and decrypt a message. Explain how different parties use different keys at different stages of operation. Evaluate the security of the tool you've chosen.
 
@@ -89,7 +92,9 @@ c) Password management. Demonstrate use of a password manager. What kind of atta
 
 
 References:
+All accessed on 20.11.2026.
 
-Karvinen 2023: https://terokarvinen.com/2023/pgp-encrypt-sign-verify/
-Karvinen 2026: https://terokarvinen.com/cyber-security/#agenda
-Schneier 2015: https://www.oreilly.com/library/view/applied-cryptography-protocols/9781119096726/08_chap01.html
+- Karvinen 2023: https://terokarvinen.com/2023/pgp-encrypt-sign-verify/
+- Karvinen 2026: https://terokarvinen.com/cyber-security/#agenda
+- Microsoft 2026: https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-cert-verification
+- Schneier 2015: https://www.oreilly.com/library/view/applied-cryptography-protocols/9781119096726/08_chap01.html
