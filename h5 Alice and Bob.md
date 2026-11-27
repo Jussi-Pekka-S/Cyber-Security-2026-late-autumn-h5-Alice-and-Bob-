@@ -76,13 +76,40 @@ b) Encrypt and decrypt a message. Explain how different parties use different ke
 Used Sources: (Both links of GnuPG 2026 & OpenPGP)
 
 For this part, I have used OpenPGP, where i chose the GnuPG(gpg). I think this in a way demonstrates/uses the same public-key concepts from the exercise that Karvinen had in the article. 
-I will call myself person A(decryptor) , and the other end person B(encryptor).
+I will call myself person A(Encryptor) , and the other end person B(Decryptor).
+
+EDIT: Changed Person A to (Encryptor), and the person B to (Decryptor)
+EDIT: Changed a bit of the structure and added few lines of code to help with the "story".
 
 - I want to sent an message to the person B, where I say "tomorrow's meeting starts at 13:00." 
-- Person B will create a key pair, and after that sent person A the public key, while keeping private key a secret.
-- Person A will import the key, and encrypt the file using this command:
+- Person B will create a key pair:
 
+gpg --full-generate-key
+
+<img width="481" height="369" alt="image" src="https://github.com/user-attachments/assets/b9d4e6ee-49fc-45c2-80eb-5284c4a48a72" />
+
+- After that person B will sent person A the public key, while keeping private key a secret:
+
+gpg --armor --export B@example.com > B_public_key.asc
+cat B_public_key.asc
+
+<img width="479" height="167" alt="image" src="https://github.com/user-attachments/assets/5706b2a2-0e7b-4288-9d1a-0f3e581bccea" />
+
+ 
+- Person A will import the key:
+
+gpg --import B_public_key.asc
+
+<img width="480" height="78" alt="image" src="https://github.com/user-attachments/assets/276258c4-af75-4993-ad9d-b9ebb7fa9d34" />
+
+- Person A will encrypt the file using these commands:
+
+echo "tomorrow's meeting starts at 13:00." > message.txt
 gpg --encrypt --armor --recipient B@example.com message.txt
+ls -l message.txt
+cat message.txt.asc
+
+<img width="479" height="205" alt="image" src="https://github.com/user-attachments/assets/d820c67e-9a27-4135-a469-3c8eb25ff93c" />
 
 - This results in the encrypted file message.txt.asc, that can be sent to person B.
 - This will hide the original message from an possible eavesdropper, if they obtain the file.
@@ -90,6 +117,8 @@ gpg --encrypt --armor --recipient B@example.com message.txt
 - Person B can decrypt it with the following command:
 
 gpg --decrypt message.txt.asc
+
+<img width="483" height="83" alt="image" src="https://github.com/user-attachments/assets/651e87fe-9dee-4b04-bc5e-565b026f8b5b" />
 
 - This will result in the GnuPG using the corresponding private/secret key that recovers: "tomorrow's meeting starts at 13:00."
 
@@ -107,6 +136,8 @@ gpg --decrypt message.txt.asc
 2. Key verification has a "possibility" of wrong verification, as the cryptography does not mention who the key belongs to. This leads to possibilities of fake public keys being used.
 
 I hope this text opens up the usage of OpenPGP & GnuPG. As I forgot to take the pictures. Look at the original sources to find more information! 
+
+EDIT: Added the pictures, with the help of Tools :)
 
 c) Password management. Demonstrate use of a password manager. What kind of attacks take advantage of people not using password managers? (You can use any password manager, some examples include pass and KeePassXC.)
 
