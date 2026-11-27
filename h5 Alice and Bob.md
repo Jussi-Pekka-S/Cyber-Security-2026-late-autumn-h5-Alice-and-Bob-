@@ -91,6 +91,7 @@ gpg --full-generate-key
 - After that person B will sent person A the public key, while keeping private key a secret:
 
 gpg --armor --export B@example.com > B_public_key.asc
+
 cat B_public_key.asc
 
 <img width="479" height="167" alt="image" src="https://github.com/user-attachments/assets/5706b2a2-0e7b-4288-9d1a-0f3e581bccea" />
@@ -105,8 +106,11 @@ gpg --import B_public_key.asc
 - Person A will encrypt the file using these commands:
 
 echo "tomorrow's meeting starts at 13:00." > message.txt
+
 gpg --encrypt --armor --recipient B@example.com message.txt
+
 ls -l message.txt
+
 cat message.txt.asc
 
 <img width="479" height="205" alt="image" src="https://github.com/user-attachments/assets/d820c67e-9a27-4135-a469-3c8eb25ff93c" />
